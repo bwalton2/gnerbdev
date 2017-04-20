@@ -1,3 +1,3 @@
 public class AccountAddressTrigger {
-    // Comment for branch 1
+    // Yay for conflicts
 }
