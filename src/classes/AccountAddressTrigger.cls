@@ -1,3 +1,3 @@
 public class AccountAddressTrigger {
-    // Should cause merge conflict
+    // Triggering another conflict
 }
