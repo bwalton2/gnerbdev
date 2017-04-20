@@ -1,0 +1,4 @@
+<apex:page standardController="Account" >
+    <apex:pageBlock >test</apex:pageBlock>
+    <apex:relatedList list="fakeobjs__r" />
+</apex:page>

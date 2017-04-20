@@ -1,0 +1,60 @@
+<apex:page standardController="Case_Contact__c" recordSetVar="passThrough" extensions="CaseContactControllerHelper">
+    <apex:form id="form">
+    	<apex:pageBlock id="pageBlock" title="Add Multiple Case Contacts">
+            <apex:pageBlockButtons >
+            </apex:pageBlockButtons>
+        	<apex:outputPanel id="container">
+            	<apex:pageBlockSection columns="1" title="Case Contacts"
+                    id="CCSection" collapsible="False">
+                	<apex:pageBlockTable value="{!CaseContacts}" var="CaseContact" id="CCTable">
+                        <apex:column headerValue="">
+                            <apex:commandLink value="X" action="{!DeleteCaseContact}" style="color:red;text-decoration:none;" 
+                            	rerender="container" immediate="true">
+                            	<apex:param assignTo="{!ToDo}" value="{!CaseContact.Id}" name="{!CaseContact.Id}"/>
+                            </apex:commandLink>
+                            <!--<apex:outputText value="X" style="color:red"/>
+                                <apex:actionSupport event="onclick" action="{!DeleteCaseContact}" rerender="container">
+                                    <apex:param assignTo="{!ToDo}" value="{!CaseContact.Id}" name="{!CaseContact.Id}"/>
+                                </apex:actionSupport>-->
+                        </apex:column>
+                        <apex:column headerValue="First Name">
+                            <apex:inputField value="{!CaseContact.First_Name__c}" style="width:100px;" rendered="{!ISNULL(CaseContact.Contact__c)}"/>
+                        	<apex:outputField value="{!CaseContact.First_Name__c}" style="width:100px;" rendered="{!NOT(ISNULL(CaseContact.Contact__c))}" />
+                        </apex:column>
+                        <apex:column headerValue="Last Name">
+                            <apex:inputField value="{!CaseContact.Last_Name__c}" style="width:100px;" rendered="{!ISNULL(CaseContact.Contact__c)}"/>
+                        	<apex:outputField value="{!CaseContact.Last_Name__c}" style="width:100px;" rendered="{!NOT(ISNULL(CaseContact.Contact__c))}" />
+                        </apex:column>
+                        <apex:column headerValue="Email">
+                            <apex:inputField value="{!CaseContact.Email__c}" style="width:200px;" rendered="{!ISNULL(CaseContact.Contact__c)}"/>
+                        	<apex:outputField value="{!CaseContact.Email__c}" style="width:200px;" rendered="{!NOT(ISNULL(CaseContact.Contact__c))}" />
+                        </apex:column>
+                	</apex:pageBlockTable>
+                </apex:pageBlockSection>
+            	<apex:pageBlockSection columns="1" title="Account Contacts"
+                    id="ACSection" collapsible="False">
+                	<apex:pageBlockTable value="{!AccountContacts}" var="AccountContact" id="ACTable">
+                        <apex:column headerValue="">
+                            <apex:commandLink value="+" action="{!CreateCaseContact}" style="color:Blue;text-decoration:none;" 
+                            	rerender="container" immediate="true">
+                            	<apex:param assignTo="{!ToDo}" value="{!AccountContact.Id}" name="{!AccountContact.Id}"/>
+                            </apex:commandLink>
+                        </apex:column>
+                        <apex:column headerValue="First Name">
+                            <apex:outputField value="{!AccountContact.FirstName}" style="width:100px;"/>
+                        </apex:column>
+                        <apex:column headerValue="Last Name">
+                            <apex:outputField value="{!AccountContact.LastName}" style="width:100px;"/>
+                        </apex:column>
+                        <apex:column headerValue="Email">
+                            <apex:outputField value="{!AccountContact.Email}" style="width:200px;"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection columns="2" title="New Contact"
+                    id="NCSection" collapsible="False">
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

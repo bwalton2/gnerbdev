@@ -1,0 +1,2 @@
+<apex:page standardController="Contact" recordSetVar="Contacts">
+</apex:page>

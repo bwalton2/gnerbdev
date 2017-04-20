@@ -1,0 +1,28 @@
+<apex:page controller="SupportDashboardGraphsController" sidebar="false" tabStyle="Report">
+    <script>
+    	alert(window.parent.document.title);
+    </script>
+    <div style="text-align:center;">
+        <apex:repeat value="{!Documents}" var="d">
+            <apex:outputLink value="https://gnerb-dev-ed--c.na34.visual.force.com/apex/UploadImageTest" target="_blank">
+                <apex:image url="/servlet/servlet.FileDownload?file={!d.Id}" style="Width:400px;" title="{!d.name}"/>
+            </apex:outputLink>
+    	</apex:repeat> 
+    </div>
+    <br/><br/>
+    <apex:form >
+    	<apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Update" action="{!UpdateDocuments}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!Documents}" var="d">
+                <apex:column headerValue="File Name">
+                    {!d.name}
+                </apex:column>
+                <apex:column headerValue="File">
+                    <apex:inputfile value="{!d.body}" filename="{!d.name}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+    	</apex:pageBlock>
+    </apex:form>
+</apex:page>

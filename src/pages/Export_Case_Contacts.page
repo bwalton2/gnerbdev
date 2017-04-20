@@ -1,0 +1,6 @@
+<apex:page standardcontroller="Case_Contact__c" contentType="text/csv#temp.csv"
+    language="en-US" recordSetVar="PassThrough" extensions="CaseContactControllerHelper">First Name,Last Name,Email
+    <apex:repeat value="{!CaseContacts}" var="cc">
+{!cc.First_Name__c},{!cc.Last_Name__c},{!cc.Email__c}
+    </apex:repeat>
+</apex:page>

@@ -1,0 +1,5 @@
+<apex:page >
+    <apex:pageMessages />
+    <c:Component1 />
+    <c:Component2 />
+</apex:page>

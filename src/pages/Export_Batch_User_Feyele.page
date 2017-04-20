@@ -1,0 +1,6 @@
+<apex:page standardController="Case_Contact__c" recordSetVar="Case_Contacts__c" tabStyle="Case_Contact__c">
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Page
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

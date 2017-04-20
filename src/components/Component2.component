@@ -1,0 +1,12 @@
+<apex:component controller="component2controller">
+    <apex:outputPanel id="containerPanel">
+        <apex:outputPanel id="failPanel" rendered="{!failState}">
+            <apex:outputText value="{!failMessage}"/>
+        </apex:outputPanel>
+        <apex:outputPanel id="successPanel" rendered="{!NOT(failState)}">
+            <apex:repeat value="{!contacts}" var="c">
+                Component 2 {!c.Id} <br/>
+            </apex:repeat>
+        </apex:outputPanel>
+    </apex:outputPanel>
+</apex:component>

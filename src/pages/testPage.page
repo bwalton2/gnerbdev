@@ -1,0 +1,21 @@
+<apex:page controller="testcontroller">
+    <apex:form id="testzzz">
+        <apex:outputPanel rendered="{!show}">
+            <apex:outputPanel id="my">
+                <apex:actionFunction action="{!outputValue}" name="my" rerender="false" />
+                <script>
+                    function clickHandle() {
+                        console.log(my());    
+                    }
+                </script>
+                <apex:inputCheckbox value="{!testb}" onclick="clickHandle();" />
+            </apex:outputPanel>
+        </apex:outputPanel>
+    </apex:form>
+    <apex:form >
+        <apex:outputPanel id="all">
+            <apex:actionFunction action="{!outputValue}" name="allz" rerender="testzzz" />
+            <apex:inputCheckbox value="{!testb}" onclick="allz();" />
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

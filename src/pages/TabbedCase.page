@@ -1,0 +1,114 @@
+<apex:page standardController="Case" extensions="CaseControllerExension">
+    <apex:tabPanel switchType="Client" selectedTab="detailsTab">
+        <apex:tab id="feedTab" label="Feed"  style="background-color:white;">
+            <chatter:feed entityId="{!Case.Id}" showPublisher="true"/>
+        </apex:tab>
+        <apex:tab id="detailsTab" label="Details" style="background-color:white;">
+            <apex:detail relatedList="false" inlineEdit="true"/>
+        </apex:tab>
+        <apex:tab id="commentsTab" name="commentsTab" label="Comments" style="background-color:white;">
+            <apex:pageBlock >
+                <apex:form >
+                    <div style="text-align:center;" >
+                        <apex:commandButton value="New" action="{!ccNew}" />
+                    </div>
+                    <apex:pageBlockTable value="{!CaseCommentsSortedDeSC}" var="c">
+                        <apex:column headerValue="Actions" width="50">
+                            <apex:commandLink value="Edit" action="{!ccEdit}">
+                                <apex:param assignTo="{!cId}" value="{!c.id}" name="cId" />
+                            </apex:commandLink> &nbsp;
+                            <apex:commandLink value="Del" action="{!URLFOR($Action.Account.Delete, c.Id, ['retURL'=Case.Id])}"/>
+                        </apex:column>
+                        <apex:column headerValue="Author" width="125">
+                            <apex:outputField value="{!c.CreatedBy.Name}"/> <br />
+                            <apex:outputfield value="{!c.CreatedDate}"/>
+                        </apex:column>
+                        <apex:column headerValue="Comment">
+                            <apex:outputField value="{!c.CommentBody}"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:form>
+            </apex:pageBlock>
+        </apex:tab>
+        <apex:tab id="emailTab" label="Emails" style="background-color:white;" reRender="emailTab">
+            <apex:pageBlock >
+                <apex:form >
+                    <apex:pageBlockTable value="{!CaseEmailsSortedDESC}" var="e">
+                        <apex:column headerValue="Action" width="30">
+                            <apex:commandLink value="View" target="_blank" action="{!eView}">
+                                <apex:param assignTo="{!cId}" value="{!e.Id}" name="eId"/>
+                            </apex:commandLink>
+                        </apex:column>
+                        <apex:column headerValue="Status" width="30">
+                            {!e.Status}
+                        </apex:column>
+                        <apex:column headerValue="Date" width="200">
+                            {!e.CreatedDate}
+                        </apex:column>
+                        <apex:column headerValue="Body">
+                            <apex:outputField value="{!e.TextBody}"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:form>
+            </apex:pageBlock>
+        </apex:tab>
+        <!--The following list is custom -->
+        <apex:tab id="caseContactsTab" label="Contacts" style="background-color:white;">
+            <apex:relatedList list="Case_Contacts__r"/>
+        </apex:tab>
+        <!--End Custom List-->
+        <apex:tab id="solutionsTab" label="Solutions" style="background-color:white;">
+            <apex:relatedList list="CaseSolutions"/>
+        </apex:tab>
+        <apex:tab rendered="{!$Profile.Name != 'Gnerb Community User'}" id="activitiesTab" label="Activities" style="background-color:white;">
+            <apex:relatedList list="OpenActivities"/>
+            <apex:relatedList list="ActivityHistories"/>
+        </apex:tab>
+        <apex:tab rendered="{!$Profile.Name != 'Gnerb Community User'}" id="approvalsTab" label="Approvals" style="background-color:white;">
+            <apex:relatedList rendered="{!$User.ProfileId != 'Gnerb Community User'}" list="ProcessSteps"/>
+        </apex:tab>
+        <apex:tab rendered="{!$Profile.Name != 'Gnerb Community User'}" id="caseHistoryTab" label="History" style="background-color:white;">
+            <apex:pageBlock >
+                <apex:form >
+                    <apex:pageBlockTable value="{!Case.Histories}" var="h">
+                        <apex:column headerValue="User" width="200">
+                            {!h.createdby.Name}
+                        </apex:column>
+                        <apex:column headerValue="Date" width="200">
+                            {!h.createdDate}
+                        </apex:column>
+                        <apex:column headerValue="Action">
+                            {!If(h.field = "created", "", "Changed")} <b>{!h.field}</b> {!If(h.field = "created", "This", "From")} <b>{!h.oldValue}</b> {!If(h.field = "created", "Case", "To")} <b>{!h.newValue}</b>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:form>
+            </apex:pageBlock>
+        </apex:tab>
+        <apex:tab id="attachmentsTab" name="attachmentsTab" label="Attachments" style="background-color:white;">
+            <apex:pageBlock >
+                <apex:form >
+                    <div style="text-align:center;" >
+                        <apex:commandButton value="New" action="{!aNew}" />
+                    </div>
+                    <apex:pageBlockTable value="{!CaseAttachments}" var="a">
+                        <apex:column headerValue="Actions">
+                            <apex:commandLink value="View" action="{!aView}" target="_blank"> 
+                                <apex:param assignTo="{!cId}" value="{!a.Id}" name="cId"/>
+                            </apex:commandLink>&nbsp;
+                            <apex:commandLink value="Edit" action="{!aEdit}">
+                                <apex:param assignTo="{!cId}" value="{!a.Id}" name="cId"/>
+                            </apex:commandLink>&nbsp;
+                            <apex:commandLink value="Del" action="{!URLFOR($Action.Account.Delete, a.Id, ['retURL'=Case.Id])}"/>
+                        </apex:column>
+                        <apex:column headerValue="File Name">
+                            {!a.Name}
+                        </apex:column>
+                        <apex:column headerValue="Created By">
+                            {!a.CreatedBy.Name}
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:form>
+            </apex:pageBlock>
+        </apex:tab>
+    </apex:tabPanel>
+</apex:page>

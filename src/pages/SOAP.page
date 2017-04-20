@@ -1,0 +1,38 @@
+<apex:page >
+    <script>
+    	var __sfdcSessionId = '{!GETSESSIONID()}';
+    </script>
+    <script src="../../soap/ajax/35.0/connection.js" type="text/javascript">
+    </script>
+    <script>
+        function setupPage() {
+            var callback = {
+                source : {
+                    output : document.getElementById("output"),
+                    startTime : new Date().getTime()
+                },
+                onSuccess : function (queryResult) {
+                    if (queryResult.size > 0) {
+                        var output="";
+                        var records = queryResult.getArray('records');
+                        for (var i = 0; i < records.length; i++) {
+                            var account = records[i];
+                            output += account.Id + " " + account.Name +
+                                " [Industry - " + account.Industry + "]<br>";
+                        }
+                        this.source.output.innerHTML = output;
+                    }
+                },
+                onFailure : function (error) {
+                    this.source.output.innerHTML = "An error has occurred: " + error;
+                }
+            };
+            sforce.connection.query(
+                "Select Id, Name, Industry From Account order by Industry",
+                callback);
+        }
+    	window.onload = setupPage;
+    </script>
+    <div id="output">
+    </div>
+</apex:page>
